@@ -1,0 +1,128 @@
+usuario: admin
+contraseña: 123
+
+-- Base de Datos -- nombre: sis_asistencia
+
+
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : conex 3306
+Source Server Version : 50505
+Source Host           : 127.0.0.1:3306
+Source Database       : sistema_asistencia
+
+Target Server Type    : MYSQL
+Target Server Version : 50505
+File Encoding         : 65001
+
+Date: 2022-08-06 22:31:40
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for asistencia
+-- ----------------------------
+
+
+-- ----------------------------
+-- Table structure for des
+-- ----------------------------
+DROP TABLE IF EXISTS `des`;
+CREATE TABLE `des` (
+  `id_des` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_des`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of des
+-- ----------------------------
+INSERT INTO `des` VALUES ('1', 'estudiante');
+INSERT INTO `des` VALUES ('2', 'profesor');
+INSERT INTO `des` VALUES ('3', 'directivo');
+INSERT INTO `des` VALUES ('4', 'administativo');
+INSERT INTO `des` VALUES ('5', 'otros');
+
+-- ----------------------------
+-- Table structure for persona
+-- ----------------------------
+DROP TABLE IF EXISTS `persona`;
+CREATE TABLE `persona` (
+  `id_persona` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) DEFAULT NULL,
+  `apellido` varchar(255) DEFAULT NULL,
+  `ci` varchar(255) NOT NULL,
+  `des` int(11) NOT NULL,
+  PRIMARY KEY (`id_persona`),
+  KEY `fk1` (`des`),
+  CONSTRAINT `fk1` FOREIGN KEY (`des`) REFERENCES `des` (`id_des`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of persona
+-- ----------------------------
+INSERT INTO `persona` VALUES ('1', 'juan manuel', 'quispe chocce', '78945612', '1');
+INSERT INTO `persona` VALUES ('2', 'josep', 'vega chavez', '77441122', '2');
+INSERT INTO `persona` VALUES ('3', 'erick', 'muleta paredes', '77885522', '3');
+INSERT INTO `persona` VALUES ('4', 'maria', 'molina gutierrez', '00225566', '5');
+INSERT INTO `persona` VALUES ('6', 'ismael', 'sandoval', '74433542', '4');
+INSERT INTO `persona` VALUES ('11', 'prueba', 'prueba', '00225588', '1');
+
+-- ----------------------------
+-- Table structure for institucion
+-- ----------------------------
+DROP TABLE IF EXISTS `institucion`;
+CREATE TABLE `institucion` (
+  `id_institucion` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) NOT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `ubicacion` varchar(255) DEFAULT NULL,
+  `ruc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_institucion`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of institucion
+-- ----------------------------
+INSERT INTO `institucion` VALUES ('1', 'Roscio', '925310896', 'San Juan', '78945612378');
+
+-- ----------------------------
+-- Table structure for usuario
+-- ----------------------------
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) DEFAULT NULL,
+  `apellido` varchar(100) DEFAULT NULL,
+  `usuario` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of usuario
+-- ----------------------------
+INSERT INTO `usuario` VALUES ('1', 'prueba', 'prueba', 'admin', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `usuario` VALUES ('2', 'jorgelly', 'rojas', 'jorgelly', '202cb962ac59075b964b07152d234b70');
+
+
+DROP TABLE IF EXISTS `asistencia`;
+CREATE TABLE `asistencia` (
+  `id_asistencia` int(11) NOT NULL AUTO_INCREMENT,
+  `id_persona` int(11) NOT NULL,
+  `entrada` datetime DEFAULT NULL,
+  `salida` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_asistencia`),
+  KEY `fk2` (`id_persona`),
+  CONSTRAINT `fk2` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of asistencia
+-- ----------------------------
+INSERT INTO `asistencia` VALUES ('13', '1', '2022-03-31 00:17:34', '2022-03-31 00:17:41');
+INSERT INTO `asistencia` VALUES ('14', '6', '2022-03-31 00:22:53', '2022-03-31 00:23:04');
+INSERT INTO `asistencia` VALUES ('21', '11', '2022-03-31 10:36:58', '2022-03-31 10:37:37');
+INSERT INTO `asistencia` VALUES ('22', '6', '2022-08-06 20:59:07', null);
